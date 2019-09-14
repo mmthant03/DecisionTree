@@ -41,9 +41,16 @@ public class TreeNode {
 	/*
 	 * function to create a new child node
 	 */
-	public void addChild(String newAttribute, int newBranchValue) {
+	public void makeChild(String newAttribute, int newBranchValue) {
 		TreeNode child = new TreeNode(newAttribute, newBranchValue);
 		this.children.add(child);
+	}
+	
+	/*
+	 * function to add a pre-existing node to the list of children
+	 */
+	public void addChild(TreeNode newChild) {
+		this.children.add(newChild);
 	}
 
 }
