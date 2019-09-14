@@ -85,6 +85,12 @@ public class Feature {
     		return 0;
     	}
     }
+    /*
+     * getter function for winner variable.
+     */
+    public int getWinner() {
+    	return winner;
+    }
 
 
 

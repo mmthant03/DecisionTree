@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import FeatureExtraction.Feature;
 
@@ -104,5 +105,35 @@ public class DecisionTree {
      */
     public static int winner(String[] board) {
         return Integer.parseInt(board[winnerPos]);
+    }
+    
+    /**
+     * function returns the most common output value among a set of examples
+     * @param featureList
+     * @return
+     */
+    public int pluralityValue(List<Feature> featureList) {
+    	int count0 = 0;
+    	int count1 = 0;
+    	int count2 = 0;
+    	int currentWinner;
+    	for(int k = 0; k < featureList.size(); k++) {
+    		currentWinner = featureList.get(k).getWinner();
+    		if(currentWinner == 1) {
+    			count1++;
+    		} else if(currentWinner == 2) {
+    			count2++;
+    		} else {
+    			count0++;
+    		}
+    	}
+    	
+    	if((count1 >= count2) && (count1 >= count0)) {
+    		return 1;
+    	} else if((count1 < count2) && (count2 >= count0)) {
+    		return 2;
+    	} else {
+    		return 0;
+    	}
     }
 }
