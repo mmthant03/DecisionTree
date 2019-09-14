@@ -9,6 +9,11 @@ public class Feature {
     private int center;
     private int bottomRight;
 
+    /**
+     * Constructor
+     * @param board
+     * @param winner
+     */
     public Feature(int[][] board, int winner) {
         this.setBoard(board);
         this.winner = winner;
@@ -19,12 +24,12 @@ public class Feature {
 
     }
 
-    public void display()
-    {
-        for (int i=rows-1; i>=0; i--)
-        {
-            for (int j = 0; j < columns; j++)
-            {
+    /**
+     * Display the board
+     */
+    public void display() {
+        for (int i=rows-1; i>=0; i--) {
+            for (int j = 0; j < columns; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println();
@@ -32,6 +37,10 @@ public class Feature {
         System.out.println();
     }
 
+    /**
+     * Setter method for board variable
+     * @param newBoard
+     */
     public void setBoard(int[][] newBoard) {
         for(int i=0; i<this.rows; i++) {
             for (int j=0; j < this.columns; j++) {
