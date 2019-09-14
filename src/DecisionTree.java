@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import FeatureExtraction.Feature;
 
@@ -112,7 +113,7 @@ public class DecisionTree {
      * @param outputFile
      * @throws IOException
      */
-    public static void outputCsv(String outputFile) throws IOException{
+    public static void outputCsv(String outputFile) throws IOException {
         FileWriter output = new FileWriter(outputFile);
         // append the original headers
         for (String h : headers) {
@@ -120,9 +121,9 @@ public class DecisionTree {
             output.append(",");
         }
         // append the new features
-        for (int i = 0 ; i < newFeatures.length; i++) {
+        for (int i = 0; i < newFeatures.length; i++) {
             output.append(newFeatures[i]);
-            if(i != newFeatures.length - 1) output.append(",");
+            if (i != newFeatures.length - 1) output.append(",");
             else output.append("\n");
         }
         String bottomLeft = "";
@@ -130,23 +131,53 @@ public class DecisionTree {
         String bottomRight = "";
         String higherChances = "";
         // append the data row by row
-        for (int i = 0 ; i < boardData.size(); i++) {
+        for (int i = 0; i < boardData.size(); i++) {
             output.append(boardData.get(i));
             output.append(",");
-            bottomLeft = ""+features.get(i).getBottomLeft();
+            bottomLeft = "" + features.get(i).getBottomLeft();
             output.append(bottomLeft);
             output.append(",");
-            center = ""+features.get(i).getCenter();
+            center = "" + features.get(i).getCenter();
             output.append(center);
             output.append(",");
-            bottomRight = ""+features.get(i).getBottomRight();
+            bottomRight = "" + features.get(i).getBottomRight();
             output.append(bottomRight);
             output.append(",");
-            higherChances = ""+features.get(i).getHigherChances();
+            higherChances = "" + features.get(i).getHigherChances();
             output.append(higherChances);
             output.append("\n");
         }
         output.flush();
         output.close();
+    }
+    
+    /**
+     * function returns the most common output value among a set of examples
+     * @param featureList
+     * @return
+     */
+    public int pluralityValue(List<Feature> featureList) {
+    	int count0 = 0;
+    	int count1 = 0;
+    	int count2 = 0;
+    	int currentWinner;
+    	for(int k = 0; k < featureList.size(); k++) {
+    		currentWinner = featureList.get(k).getWinner();
+    		if(currentWinner == 1) {
+    			count1++;
+    		} else if(currentWinner == 2) {
+    			count2++;
+    		} else {
+    			count0++;
+    		}
+    	}
+    	
+    	if((count1 >= count2) && (count1 >= count0)) {
+    		return 1;
+    	} else if((count1 < count2) && (count2 >= count0)) {
+    		return 2;
+    	} else {
+    		return 0;
+    	}
     }
 }
