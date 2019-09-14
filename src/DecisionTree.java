@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 import FeatureExtraction.Feature;
@@ -9,6 +6,8 @@ import FeatureExtraction.Feature;
 public class DecisionTree {
 
     public static String[] headers; // store the headers from csv file
+    public static ArrayList<String> boardData = new ArrayList<>();
+    public static String[] newFeatures = {"bottom_left", "center", "bottom_right", "higher_chances"};
     public static int winnerPos = 42; // winner is always at 43rd column of the csv file
     public static ArrayList<Feature> features; // features extracted from given board configuration
 
@@ -42,10 +41,11 @@ public class DecisionTree {
 
         try {
             importCsv(inputFile);
+            outputCsv(outputFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // testing the csv file input
+        // testing the input
         for (Feature f: features) {
             f.display();
         }
@@ -73,7 +73,8 @@ public class DecisionTree {
         String row = "";
         while ((row = input.readLine()) != null) {
             String[] data = row.split(",");
-            // do something with the data
+            boardData.add(row);
+            // Extract features from the data
             Feature f = new Feature(buildBoard(data), winner(data));
             features.add(f);
         }
@@ -100,9 +101,52 @@ public class DecisionTree {
     /**
      * get the winner piece from string array
      * @param board
-     * @return
+     * @return player who wins the game at given configuration
      */
     public static int winner(String[] board) {
         return Integer.parseInt(board[winnerPos]);
+    }
+
+    /**
+     * writes the data to the output csv file
+     * @param outputFile
+     * @throws IOException
+     */
+    public static void outputCsv(String outputFile) throws IOException{
+        FileWriter output = new FileWriter(outputFile);
+        // append the original headers
+        for (String h : headers) {
+            output.append(h);
+            output.append(",");
+        }
+        // append the new features
+        for (int i = 0 ; i < newFeatures.length; i++) {
+            output.append(newFeatures[i]);
+            if(i != newFeatures.length - 1) output.append(",");
+            else output.append("\n");
+        }
+        String bottomLeft = "";
+        String center = "";
+        String bottomRight = "";
+        String higherChances = "";
+        // append the data row by row
+        for (int i = 0 ; i < boardData.size(); i++) {
+            output.append(boardData.get(i));
+            output.append(",");
+            bottomLeft = ""+features.get(i).getBottomLeft();
+            output.append(bottomLeft);
+            output.append(",");
+            center = ""+features.get(i).getCenter();
+            output.append(center);
+            output.append(",");
+            bottomRight = ""+features.get(i).getBottomRight();
+            output.append(bottomRight);
+            output.append(",");
+            higherChances = ""+features.get(i).getHigherChances();
+            output.append(higherChances);
+            output.append("\n");
+        }
+        output.flush();
+        output.close();
     }
 }

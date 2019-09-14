@@ -20,11 +20,8 @@ public class Feature {
         this.winner = winner;
         this.bottomLeft = getBottomLeft();
         this.center = centerHolder();
-        // after setting up the board, will use that board to set up the feature
-        // will go like this
-        // this.bottomLeft = BottomLeft();
-        // this.center = Center();
-        this.setHigherChances();
+        this.bottomRight = getBottomRight();
+        this.higherChances = higherChancesHolder();
 
     }
 
@@ -39,7 +36,12 @@ public class Feature {
             }
             System.out.println();
         }
-        System.out.println("\nWinner piece : " + this.winner + "\n");
+        System.out.println("\nWinner piece   : " + this.winner);
+        System.out.println("\nBottom Left    : " + this.bottomLeft);
+        System.out.println("\nCenter         : " + this.center);
+        System.out.println("\nBottom Right   : " + this.bottomRight);
+        System.out.println("\nHigher Chances : " + this.higherChances);
+        System.out.println();
     }
 
     /**
@@ -54,14 +56,28 @@ public class Feature {
         }
     }
     
-    /*
+    /**
      * returns value of bottom left position of board.
      */
     public int getBottomLeft() {
     	return board[0][0];
     }
+
+    /**
+     * returns value of bottom left position of board.
+     */
+    public int getBottomRight() {
+        return board[0][6];
+    }
+
+    /**
+     * returns player who has more pieces in center columns.
+     */
+    public int getCenter() {
+        return this.center;
+    }
     
-    /*
+    /**
      * return which player has the most pieces in the center columns of the board
      */
     public int centerHolder() {
@@ -89,11 +105,17 @@ public class Feature {
     	}
     }
 
+    /**
+     * returns player who has more higher chances to win
+     */
     public int getHigherChances() {
         return this.higherChances;
     }
 
-    public void setHigherChances() {
+    /**
+     * return which player has more chances to win
+     */
+    public int higherChancesHolder() {
         // set the evaluation table
         int[][] evaluationTable =   {{3, 4, 5, 7, 5, 4, 3},
                                     {4, 6, 8, 10, 8, 6, 4},
@@ -110,12 +132,12 @@ public class Feature {
             }
         }
         // compare the chances and return the piece which show higher chances
-        if(winChances[0] >= winChances[1] && winChances[0]>= winChances[2]) {
-            this.higherChances = 0;
-        } else if (winChances[1] > winChances[2]) {
-            this.higherChances = 1;
+        if (winChances[1] > winChances[2]) {
+            return 1;
         } else if (winChances[2] > winChances[1]) {
-            this.higherChances = 2;
+            return 2;
+        } else {
+            return 0;
         }
     }
 
