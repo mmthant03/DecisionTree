@@ -8,6 +8,7 @@ public class Feature {
     private int bottomLeft;
     private int center;
     private int bottomRight;
+    private int controlCent2;
 
     /**
      * Constructor
@@ -19,6 +20,7 @@ public class Feature {
         this.winner = winner;
         this.bottomLeft = getBottomLeft();
         this.center = centerHolder();
+        this.controlCent2 = centerTwo();
         // after setting up the board, will use that board to set up the feature
         // will go like this
         // this.bottomLeft = BottomLeft();
@@ -92,6 +94,35 @@ public class Feature {
     	return winner;
     }
 
+    /*
+     * returns which player controls the center 2 positions
+     */
+    public int centerTwo() {
+    	int count1 = 0;
+    	int count2 = 0;
+    	int centPos1 = board[2][3];
+    	int centPos2 = board[3][3];
+    	
+    	if(centPos1 == 1) {
+    		count1++;
+    	} else if(centPos1 == 2) {
+    		count2++;
+    	}
+    	
+    	if(centPos2 == 1) {
+    		count1++;
+    	} else if(centPos2 == 2) {
+    		count2++;
+    	}
+    	
+    	if(count1 > count2) {
+    		return 1;
+    	} else if (count1 < count2) {
+    		return 2;
+    	} else {
+    		return 0;
+    	}
+    }
 
 
 }
