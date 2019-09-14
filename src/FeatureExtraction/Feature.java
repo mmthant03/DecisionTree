@@ -43,6 +43,7 @@ public class Feature {
         System.out.println("\nCenter         : " + this.center);
         System.out.println("\nBottom Right   : " + this.bottomRight);
         System.out.println("\nHigher Chances : " + this.higherChances);
+        System.out.println("\nCenter Two     : " + this.controlCent2);
         System.out.println();
     }
 
@@ -119,6 +120,13 @@ public class Feature {
      */
     public int getHigherChances() {
         return this.higherChances;
+    }
+
+    /**
+     * returns which player control the most center pieces of the board
+     */
+    public int getCenterTwo() {
+        return this.controlCent2;
     }
 
     /**

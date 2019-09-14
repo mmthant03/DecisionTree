@@ -8,7 +8,7 @@ public class DecisionTree {
 
     public static String[] headers; // store the headers from csv file
     public static ArrayList<String> boardData = new ArrayList<>();
-    public static String[] newFeatures = {"bottom_left", "center", "bottom_right", "higher_chances"};
+    public static String[] newFeatures = {"bottom_left", "center", "bottom_right", "higher_chances", "center_two"};
     public static int winnerPos = 42; // winner is always at 43rd column of the csv file
     public static ArrayList<Feature> features; // features extracted from given board configuration
 
@@ -130,6 +130,7 @@ public class DecisionTree {
         String center = "";
         String bottomRight = "";
         String higherChances = "";
+        String centerTwo="";
         // append the data row by row
         for (int i = 0; i < boardData.size(); i++) {
             output.append(boardData.get(i));
@@ -145,6 +146,9 @@ public class DecisionTree {
             output.append(",");
             higherChances = "" + features.get(i).getHigherChances();
             output.append(higherChances);
+            output.append(",");
+            centerTwo = "" + features.get(i).getCenterTwo();
+            output.append(centerTwo);
             output.append("\n");
         }
         output.flush();
