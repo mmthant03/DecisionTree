@@ -19,6 +19,19 @@ public class Feature {
 
     }
 
+    public void display()
+    {
+        for (int i=rows-1; i>=0; i--)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
     public void setBoard(int[][] newBoard) {
         for(int i=0; i<this.rows; i++) {
             for (int j=0; j < this.columns; j++) {
