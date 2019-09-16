@@ -8,3 +8,4 @@
 *.project
 /bin/
 trainingData/output.csv
+*.pdf
